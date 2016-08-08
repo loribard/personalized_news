@@ -9,15 +9,25 @@ from server import app
 import requests
 import praw
 import webbrowser
+import os
+
+client_secret = os.environ['CLIENT_SECRET']
+
 
 r = praw.Reddit(user_agent="Test Script by L Bard")
 r.set_oauth_app_info(client_id="c2YVgHTmKv3aAw",
-                     client_secret='Ih3Tkabt6H4KWt_Lbcdl_9RwOZs',
-                     redirect_uri='http://localhost:8080/reddit_callback'
+                     client_secret=client_secret,
+                     redirect_uri='http://127.0.0.1:65010/authorize_callback'
                      )
-url=r.get_authorize_url('uniqueKey','identity',True)
+# url=r.get_authorize_url('uniqueKey', 'identity read', True)
 
-webbrowser.open(url)
+# webbrowser.open(url)
+
+access_information = r.get_access_information('9ZxlvAMpvic4Ldk-Tk6g9-ieMtQ')
+r.set_access_credentials(**access_information)
+authenticated_user = r.get_me()
+print authenticated_user.name, authenticated_user.link_karma
+
 # access_information=r.get_access_information('')
  # Interest Inquiry by L. Bard"
 # r = praw.Reddit(user_agent=user_agent)
