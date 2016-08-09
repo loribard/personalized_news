@@ -1,60 +1,9 @@
-"""Utility file to seed ratings database from MovieLens data in seed_data/"""
-import time
-import datetime
 from sqlalchemy import func
-import json
 
-from model import User, Rating, Movie, connect_to_db, db
-from server import app
-import requests
-import praw
-import webbrowser
-import os
+from model import connect_to_db,db,User
+from reddit_example_server import app
 
-client_secret = os.environ['CLIENT_SECRET']
-
-
-r = praw.Reddit(user_agent="Test Script by L Bard")
-r.set_oauth_app_info(client_id="c2YVgHTmKv3aAw",
-                     client_secret=client_secret,
-                     redirect_uri='http://127.0.0.1:65010/authorize_callback'
-                     )
-# url=r.get_authorize_url('uniqueKey', 'identity read', True)
-
-# webbrowser.open(url)
-
-access_information = r.get_access_information('9ZxlvAMpvic4Ldk-Tk6g9-ieMtQ')
-r.set_access_credentials(**access_information)
-authenticated_user = r.get_me()
-print authenticated_user.name, authenticated_user.link_karma
-
-# access_information=r.get_access_information('')
- # Interest Inquiry by L. Bard"
-# r = praw.Reddit(user_agent=user_agent)
-# prawWords-["technology"]
-# user_name = "Loribard"
-# user = r.get_redditor(user_name)
-# thing_limit = 10
-# gen = user.get_submitted(limit=thing_limit)
-# interest_by_subreddit = {}
-# for thing in gen:
-#     subreddit = thing.subreddit.display_name
-#     interest_by_subreddit[subreddit] = (interest_by_subreddit.get(subreddit,0) + thing.score)
-# import pprint
-# pprint.pprint(interest_by_subreddit)
-
-
-# def load_reddit_subreddit():
-
-#     """Load users from u.user into database."""
-
-   
-
-# URL = "https://www.reddit.com/r/technology.json"
-
-# # fetch url
-# # decode the json string 
-# # print titles of articles on page
+"""Utility file to seed MyNews database"""
 
 # def fetch_listing(url):
 #     response = requests.get(url)
@@ -77,24 +26,24 @@ print authenticated_user.name, authenticated_user.link_karma
 # if __name__ == '__main__':
 #     main()
 
+def load_users():
+    print "Users"
+    Users= {"user1":
+            {"name":"lori","password":"hi there"}
+            }
+    
+    for key in Users.keys():
+        print "Key ", key
+        print "Value", Users[key]
+        name = Users[key]["name"]
+        print "Name: ", name
+        password = Users[key]["password"]
+        print "Password: ", password
+        user=User(name=name,password=password)
+    
+        db.session.add(key)
+    db.session.commit()
 
-
-#     for i, row in enumerate(open("seed_data/u.user")):
-#         row = row.rstrip()
-#         user_id, age, gender, occupation, zipcode = row.split("|")
-
-#         user = User(age=age,
-#                     zipcode=zipcode)
-
-#         # We need to add to the session or it won't ever be stored
-#         db.session.add(user)
-
-#         # provide some sense of progress
-#         if i % 100 == 0:
-#             print i
-
-#     # Once we're done, we should commit our work
-#     db.session.commit()
 
 
 # def load_movies():

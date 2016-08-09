@@ -23,64 +23,63 @@ class User(db.Model):
                         primary_key=True)
     email = db.Column(db.String(64), nullable=True)
     password = db.Column(db.String(64), nullable=True)
-    age = db.Column(db.Integer, nullable=True)
-    zipcode = db.Column(db.String(15), nullable=True)
+   
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s email=%s>" % (self.user_id,
-                                               self.email)
+        return "<User user_id=%s name=%s> password=%s" % (self.user_id,
+                                               self.email,self.password)
 
 
-class Movie(db.Model):
-    """Movie on ratings website."""
+# class Movie(db.Model):
+#     """Movie on ratings website."""
 
-    __tablename__ = "movies"
+#     __tablename__ = "movies"
 
-    movie_id = db.Column(db.Integer,
-                         autoincrement=True,
-                         primary_key=True)
-    title = db.Column(db.String(100))
-    released_at = db.Column(db.DateTime)
-    imdb_url = db.Column(db.String(200))
+#     movie_id = db.Column(db.Integer,
+#                          autoincrement=True,
+#                          primary_key=True)
+#     title = db.Column(db.String(100))
+#     released_at = db.Column(db.DateTime)
+#     imdb_url = db.Column(db.String(200))
 
-    def __repr__(self):
-        """Provide helpful representation when printed."""
+#     def __repr__(self):
+#         """Provide helpful representation when printed."""
 
-        return "<Movie movie_id=%s title=%s>" % (self.movie_id,
-                                                 self.title)
+#         return "<Movie movie_id=%s title=%s>" % (self.movie_id,
+#                                                  self.title)
 
 
-class Rating(db.Model):
-    """Rating of a movie by a user."""
+# class Rating(db.Model):
+#     """Rating of a movie by a user."""
 
-    __tablename__ = "ratings"
+#     __tablename__ = "ratings"
 
-    rating_id = db.Column(db.Integer,
-                          autoincrement=True,
-                          primary_key=True)
-    movie_id = db.Column(db.Integer,
-                         db.ForeignKey('movies.movie_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    score = db.Column(db.Integer)
+#     rating_id = db.Column(db.Integer,
+#                           autoincrement=True,
+#                           primary_key=True)
+#     movie_id = db.Column(db.Integer,
+#                          db.ForeignKey('movies.movie_id'))
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+#     score = db.Column(db.Integer)
 
-    # Define relationship to user
-    user = db.relationship("User",
-                           backref=db.backref("ratings",
-                                              order_by=rating_id))
+#     # Define relationship to user
+#     user = db.relationship("User",
+#                            backref=db.backref("ratings",
+#                                               order_by=rating_id))
 
-    # Define relationship to movie
-    movie = db.relationship("Movie",
-                            backref=db.backref("ratings",
-                                               order_by=rating_id))
+#     # Define relationship to movie
+#     movie = db.relationship("Movie",
+#                             backref=db.backref("ratings",
+#                                                order_by=rating_id))
 
-    def __repr__(self):
-        """Provide helpful representation when printed."""
+#     def __repr__(self):
+#         """Provide helpful representation when printed."""
 
-        s = "<Rating rating_id=%s movie_id=%s user_id=%s score=%s>"
-        return s % (self.rating_id, self.movie_id, self.user_id,
-                    self.score)
+#         s = "<Rating rating_id=%s movie_id=%s user_id=%s score=%s>"
+#         return s % (self.rating_id, self.movie_id, self.user_id,
+#                     self.score)
 
 
 #####################################################################
@@ -100,6 +99,6 @@ if __name__ == "__main__":
     # leave you in a state of being able to work with the database
     # directly.
 
-    from server import app
+    from reddit_example_server import app
     connect_to_db(app)
     print "Connected to DB."
